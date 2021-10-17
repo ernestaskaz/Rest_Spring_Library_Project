@@ -30,5 +30,5 @@ class BookRepositoryTest {
         assertThat(bookTestRepository.getById(1L).getName()).isEqualTo(book1.getName());
 
     }
-    
+
 }
