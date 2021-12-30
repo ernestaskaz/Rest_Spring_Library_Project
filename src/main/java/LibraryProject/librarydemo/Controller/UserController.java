@@ -1,6 +1,7 @@
 package LibraryProject.librarydemo.Controller;
 
 import LibraryProject.librarydemo.model.Book;
+import LibraryProject.librarydemo.model.BorrowBookSystem;
 import LibraryProject.librarydemo.model.User;
 import LibraryProject.librarydemo.service.BookService;
 import LibraryProject.librarydemo.service.UserService;
@@ -46,6 +47,10 @@ public class UserController {
     @GetMapping("{id}/mybooks")
     public List<Book> getUserBooks(@PathVariable("id") long userId){
         return userService.getUserBooks(userId);
+    }
+    @GetMapping("{id}/borrowedbooks")
+    public List<BorrowBookSystem> getBorrowedBooks(@PathVariable("id") long userId){
+        return userService.getUserBorrowedBooks(userId);
     }
 
 

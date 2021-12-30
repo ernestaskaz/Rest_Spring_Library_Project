@@ -1,7 +1,11 @@
 package LibraryProject.librarydemo.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +18,13 @@ public class User {
     private long id;
     private String userName;
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Book> userBooks = new ArrayList<>();
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<BorrowBookSystem> borrowedBooksCard = new ArrayList<>();
+    
 
     public void setId(int id) {
         this.id = id;
@@ -40,6 +48,15 @@ public class User {
     public List<Book> getUserBooks() {
         return userBooks;
     }
+    
+    
+	public List<BorrowBookSystem> getBorrowedBooksCard() {
+		return borrowedBooksCard;
+	}
+
+	public void addBorrowedBooksCard(BorrowBookSystem borrow) {
+		borrowedBooksCard.add(borrow);
+	}
 
 
 }

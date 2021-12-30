@@ -12,10 +12,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-
+// Spring initializes NEW in background; @Autowired shows it to Spring (dependency). Autowired not needed with spring 4.3(?)+
     private BookService bookService;
     private UserService userService;
-
+// autowires automatically through constructor(jeigu vienas). recommended approach over @autowired fields. e nsures that values are not null;
     public BookController(BookService bookService, UserService userService) {
         this.bookService = bookService;
         this.userService = userService;
@@ -40,7 +40,7 @@ public class BookController {
         bookService.deleteBookById(id);
         return new ResponseEntity<String>("Book deleted", HttpStatus.OK);
 
-    }
+    } 
 //TODO. http status ok? pergalvoti. peržiūrėti be if, jeigu pridėjimas failina (arba tą pačią knygą pridedi, vistiek book added returnina.
     @PutMapping("/{bookId}/user/{userId}")
     public ResponseEntity<String> assignBookToUser(@PathVariable("bookId") long bookId, @PathVariable("userId") long userId) {
