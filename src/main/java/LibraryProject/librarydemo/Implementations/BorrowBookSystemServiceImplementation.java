@@ -41,7 +41,6 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
                 book.assignUser(user);
                 user.addBooksToUser(book);
                 book.setAvailable();
-             //   setTakenAndReturnDates(book);
                 bookRepository.save(book);
                 userRepository.save(user);
                 borrowRepository.save(borrow);
@@ -76,19 +75,19 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
 //
 //    }
 
-//    @Override
-//    public void extendBook(long borrowId) {
-//    	BorrowBookSystem borrow = borrowRepository.getById(borrowId);
-//        LocalDate dateToExtend = borrow.getDateToReturn();
-//        if (!book.isWasTaken()) {
-//            book.setDateToReturn(dateToExtend.plusMonths(1));
-//            book.setWasTaken(true);
-//            saveBook(book);
-//        } else {
-//            throw new IllegalArgumentException("can't extend more than once");
-//
-//        }
-//    }
+   @Override
+    public void extendBook(long borrowId) {
+    	BorrowBookSystem borrow = borrowRepository.getById(borrowId);
+        LocalDate dateToExtend = borrow.getDateToReturn();
+        if (!borrow.isCanBeExtended()) {
+            borrow.setDateToReturn(dateToExtend.plusMonths(1));
+            borrow.setCanBeExtended(false);
+            borrowRepository.save(borrow);
+        } else {
+            throw new IllegalArgumentException("can't extend more than once");
+
+        }
+    }
 	
 	
 
