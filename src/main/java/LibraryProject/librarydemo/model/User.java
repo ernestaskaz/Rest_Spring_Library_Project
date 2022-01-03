@@ -18,9 +18,9 @@ public class User {
     private long id;
     private String userName;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Book> userBooks = new ArrayList<>();
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    private List<Book> userBooks = new ArrayList<>();
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<BorrowBookSystem> borrowedBooksCard = new ArrayList<>();
@@ -40,15 +40,6 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public void addBooksToUser(Book book) {
-        userBooks.add(book);
-    }
-
-    public List<Book> getUserBooks() {
-        return userBooks;
-    }
-    
     
 	public List<BorrowBookSystem> getBorrowedBooksCard() {
 		return borrowedBooksCard;

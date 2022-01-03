@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,14 +28,6 @@ public class BorrowBookSystemController {
 		
 	}
 	
-	
-//	
-//    @PostMapping("/{userId}/{bookId}")
-//    public ResponseEntity<BorrowBookSystem> saveBorrow(@RequestBody BorrowBookSystem borrow, @PathVariable("userId") long userId, @PathVariable("bookId") long bookId) {
-//     return new ResponseEntity<BorrowBookSystem>(borrowBookSystemService.saveBorrow(borrow, 0, 0), HttpStatus.CREATED);
-//    }
-	
-	
     @PostMapping("/{userId}/{bookId}")
     public ResponseEntity<String> saveBorrow(@PathVariable("userId") long userId, @PathVariable("bookId") long bookId) {
      borrowBookSystemService.saveBorrow(userId, bookId);
@@ -47,6 +41,28 @@ public class BorrowBookSystemController {
     @GetMapping("{id}")
     public ResponseEntity<BorrowBookSystem> getBorrowById(@PathVariable("id") long borrowId) {
         return new ResponseEntity<BorrowBookSystem>(borrowBookSystemService.getBorrowById(borrowId), HttpStatus.OK);
+    }
+    
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteBorrowById(@PathVariable("id") long id) {
+        borrowBookSystemService.deleteBorrowById(id);
+        return new ResponseEntity<String>("Borrow information deleted", HttpStatus.OK);
+
+    } 
+
+    @PutMapping("/extend/{borrowId}")
+    public ResponseEntity<String> extendBook (@PathVariable("borrowId") long borrowId) {
+    	borrowBookSystemService.extendBook(borrowId);
+    	return new ResponseEntity<String>("book " + borrowBookSystemService.getBorrowById(borrowId).getBook().getName() + " extended until " + borrowBookSystemService.getBorrowById(borrowId).getDateToReturn(),  HttpStatus.OK);
+    	
+    }
+    
+
+    @PutMapping("/return/{borrowId}")
+    public ResponseEntity<String> returnBorrowedBook (@PathVariable("borrowId") long borrowId) {
+    	borrowBookSystemService.returnBorrowedBook(borrowId);
+    	return new ResponseEntity<String>("book " + borrowBookSystemService.getBorrowById(borrowId).getBook().getName() + " is returned on " + borrowBookSystemService.getBorrowById(borrowId).getDateReturned(),  HttpStatus.OK);
+    	
     }
 
 

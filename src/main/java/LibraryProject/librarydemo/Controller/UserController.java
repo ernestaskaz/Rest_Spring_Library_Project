@@ -34,7 +34,6 @@ public class UserController {
 
     }
 
-    //http://localhost:8080/users/1
     @GetMapping("{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") long userId) {
     return new ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK);
@@ -44,13 +43,20 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }
-    @GetMapping("{id}/mybooks")
-    public List<Book> getUserBooks(@PathVariable("id") long userId){
-        return userService.getUserBooks(userId);
-    }
+
     @GetMapping("{id}/borrowedbooks")
     public List<BorrowBookSystem> getBorrowedBooks(@PathVariable("id") long userId){
-        return userService.getUserBorrowedBooks(userId);
+        return userService.getAllBorrowedUserBooks(userId);
+    }
+    
+    @GetMapping("{id}/activebooks")
+    public List<BorrowBookSystem> getUserActiveBooks(@PathVariable("id") long userId){
+        return userService.getUserActiveBooks(userId);
+    }
+    
+    @GetMapping("{id}/bookhistory")
+    public List<BorrowBookSystem> getUserBookHistory(@PathVariable("id") long userId){
+        return userService.getUserBookHistory(userId);
     }
 
 

@@ -12,48 +12,48 @@ import LibraryProject.librarydemo.Repository.UserRepository;
 import LibraryProject.librarydemo.model.Book;
 import LibraryProject.librarydemo.model.BorrowBookSystem;
 import LibraryProject.librarydemo.model.User;
+import LibraryProject.librarydemo.service.BookService;
 import LibraryProject.librarydemo.service.BorrowBookSystemService;
+import LibraryProject.librarydemo.service.UserService;
 
 @Service
 public class BorrowBookSystemServiceImplementation implements BorrowBookSystemService {
 	
-    private BookRepository bookRepository;
-    private UserRepository userRepository;
     private BorrowRepository borrowRepository;
+    private UserService userService;
+    private BookService bookService;
 	
-	
-	
-
-    public BorrowBookSystemServiceImplementation(BorrowRepository borrowRepository, BookRepository bookRepository, UserRepository userRepository) {
-        this.borrowRepository = borrowRepository;
-    	this.bookRepository = bookRepository;
-        this.userRepository = userRepository;
-    }
+    
+	  public BorrowBookSystemServiceImplementation(BorrowRepository borrowRepository, BookService bookService, UserService userService) {
+	  this.borrowRepository = borrowRepository;
+	  this.bookService = bookService;
+	  this.userService = userService;
+	}
 
 
 	@Override
 	public void saveBorrow(long userId, long bookId) {
-        Book book = bookRepository.getById(bookId);
-        User user = userRepository.getById(userId);
-        BorrowBookSystem borrow =  new BorrowBookSystem(LocalDate.now(),LocalDate.now().plusMonths(1), user, book);
+        
+      Book book = bookService.getBookById(bookId);
+      User user = userService.getUserById(userId);
+  
         if (book.isAvailable()) {
-            if (user.getUserBooks().size() < 3 || user.getUserBooks() == null) {
-                book.assignUser(user);
-                user.addBooksToUser(book);
-                book.setAvailable();
-                bookRepository.save(book);
-                userRepository.save(user);
+            if (userService.getUserActiveBooks(userId).size() < 3) {
+                
+            	BorrowBookSystem borrow =  new BorrowBookSystem(LocalDate.now(),LocalDate.now().plusMonths(1), user, book);
+            	book.addBorrowedBooksCard(borrow);
+                user.addBorrowedBooksCard(borrow);
+                book.setAvailable(false);
                 borrowRepository.save(borrow);
             } else {
-
-                //TODO. google normali error praktika web aplikacijoje. Gal atskira returnentity/exception custom klasė? Ar struktūriškai turėčiau naudoti Response entity tik control?
+      
                 throw new IllegalArgumentException("maximum number of books taken can't exceed 3 at a time");
             }
         } else { throw new IllegalArgumentException("book already taken");
 
-        }
 
     }
+	}
 
 
 	@Override
@@ -67,19 +67,12 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
 	        return borrow.get();
 	}
 	
-	
-//    @Override
-//    public void setTakenAndReturnDates(BorrowBookSystem borrow) {
-//        borrow.setDateTaken(LocalDate.now());
-//        borrow.setDateToReturn(LocalDate.now().plusMonths(1));
-//
-//    }
 
    @Override
     public void extendBook(long borrowId) {
     	BorrowBookSystem borrow = borrowRepository.getById(borrowId);
         LocalDate dateToExtend = borrow.getDateToReturn();
-        if (!borrow.isCanBeExtended()) {
+        if (borrow.isCanBeExtended()) {
             borrow.setDateToReturn(dateToExtend.plusMonths(1));
             borrow.setCanBeExtended(false);
             borrowRepository.save(borrow);
@@ -88,6 +81,31 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
 
         }
     }
+
+
+@Override
+public void deleteBorrowById(long borrowId) {
+	Optional<BorrowBookSystem> borrow = borrowRepository.findById(borrowId);
+    borrowRepository.deleteById(borrowId);
+	
+}
+
+
+@Override
+public void returnBorrowedBook(long borrowId) {
+	BorrowBookSystem currentBorrow = borrowRepository.getById(borrowId);
+	currentBorrow.setReturned(true);
+	currentBorrow.setDateReturned(LocalDate.now());
+	currentBorrow.getBook().setAvailable(true);
+	borrowRepository.save(currentBorrow);
+	
+	
+}
+
+
+
+
+
 	
 	
 

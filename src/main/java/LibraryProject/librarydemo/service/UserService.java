@@ -11,8 +11,9 @@ public interface UserService {
     List<User> getUsers();
     User getUserById(long id);
     void deleteUser(long id);
-    List<Book> getUserBooks(long id);
-    List<BorrowBookSystem> getUserBorrowedBooks(long id);
+    List<BorrowBookSystem> getAllBorrowedUserBooks(long id);
+    List<BorrowBookSystem> getUserActiveBooks(long id);
+    List<BorrowBookSystem> getUserBookHistory(long id);
 
 
 

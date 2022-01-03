@@ -1,10 +1,5 @@
 package LibraryProject.librarydemo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,11 +26,9 @@ public class Book {
     private boolean wasTaken;
     // recursive problem, jeigu abu entities neturi json ignore. šis json ignore leidžia GET users matyti knygas, bet ne knygose user'ius.
     //@JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference
-    private User user;
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @ManyToOne
+//    @JsonBackReference
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<BorrowBookSystem> borrowedBooksCard = new ArrayList<>();
 
     public long getId() {
@@ -45,6 +38,10 @@ public class Book {
 
     public List<BorrowBookSystem> getBorrowedBooksCard() {
 		return borrowedBooksCard;
+	}
+    
+    public void addBorrowedBooksCard(BorrowBookSystem borrow) {
+		borrowedBooksCard.add(borrow);
 	}
 
 
@@ -108,21 +105,14 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void assignUser(User user) {
-        this.user = user;
-    }
 
 
     public boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable() {
-        isAvailable = false;
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public LocalDate getDateTaken() {
@@ -148,5 +138,6 @@ public class Book {
     public void setWasTaken(boolean wasTaken) {
         this.wasTaken = wasTaken;
     }
+   
 
 }

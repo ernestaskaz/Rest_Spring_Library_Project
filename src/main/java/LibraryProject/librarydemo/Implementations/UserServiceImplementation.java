@@ -29,6 +29,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+     
     }
 
     @Override
@@ -40,29 +41,48 @@ public class UserServiceImplementation implements UserService {
     @Override
     public void deleteUser(long id) {
     	Optional<User> user  = userRepository.findById(id);
-    	List<Book> userBooks = user.get().getUserBooks();
-    	for (Book book : userBooks) {
-    		book.assignUser(null);
-    		book.setAvailable();
-    		book.setWasTaken(false);
-    	}
+//    	List<BorrowBookSystem> borrowedBooks = user.get().getBorrowedBooksCard();
+//    	for (BorrowBookSystem borrow : borrowedBooks) {
+//    		book.assignUser(null);
+//    		book.setAvailable();
+//    		book.setWasTaken(false);
+//    	}
         userRepository.deleteById(id);
     }
 
-    @Override
-    public List<Book> getUserBooks(long id) {
-        Optional<User> user = userRepository.findById(id);
-       return user.get().getUserBooks();
-    }
-
 	@Override
-	public List<BorrowBookSystem> getUserBorrowedBooks(long id) {
+	public List<BorrowBookSystem> getAllBorrowedUserBooks(long id) {
 		   Optional<User> user = userRepository.findById(id);
 	       return user.get().getBorrowedBooksCard();
 	}
 
+	@Override
+	public List<BorrowBookSystem> getUserActiveBooks(long id) {
+			List<BorrowBookSystem> allUserBooks = getAllBorrowedUserBooks(id);
+		   List<BorrowBookSystem> activeUserBooks = new ArrayList<>();
+		   for (BorrowBookSystem borrow : allUserBooks) {
+			   if(!borrow.isReturned()) {
+				   activeUserBooks.add(borrow);
+			   }
+		   }
+	       return activeUserBooks;
+	}
 
-}
+	@Override
+	public List<BorrowBookSystem> getUserBookHistory(long id) {
+		List<BorrowBookSystem> allUserBooks = getAllBorrowedUserBooks(id);
+		   List<BorrowBookSystem> userBookHistory = new ArrayList<>();
+		   for (BorrowBookSystem borrow : allUserBooks) {
+			   if(borrow.isReturned()) {
+				   userBookHistory.add(borrow);
+			   }
+		   }
+	       return userBookHistory;
+	}
+
+	}
+
+
 
 
 

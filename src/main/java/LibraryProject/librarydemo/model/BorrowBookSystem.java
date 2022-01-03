@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,13 +25,13 @@ public class BorrowBookSystem {
     private LocalDate dateToReturn = null;
     private LocalDate dateReturned = null;
 	private boolean canBeExtended = true;
-	private boolean isReturned;
+	private boolean isReturned = false;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnoreProperties({"userBooks", "borrowedBooksCard"})
-    //@JsonBackReference
+    @JsonIgnoreProperties({"borrowedBooksCard"})
     private User user;
     @ManyToOne
+    @JsonIgnoreProperties({"borrowedBooksCard"})
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
     
@@ -85,6 +86,14 @@ public class BorrowBookSystem {
 
 	public void setDateReturned(LocalDate dateReturned) {
 		this.dateReturned = dateReturned;
+	}
+
+	public boolean isReturned() {
+		return isReturned;
+	}
+
+	public void setReturned(boolean isReturned) {
+		this.isReturned = isReturned;
 	}
     
     

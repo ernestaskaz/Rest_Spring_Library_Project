@@ -5286,3 +5286,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/Ern
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 60 more
+2022-01-03 11:36:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM BOOK BORROWBOOKSYSTEM USER[*]"; SQL statement:
+SELECT * FROM BOOK BORROWBOOKSYSTEM USER [42000-200]
