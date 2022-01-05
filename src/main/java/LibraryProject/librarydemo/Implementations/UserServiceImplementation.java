@@ -40,14 +40,13 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void deleteUser(long id) {
-    	Optional<User> user  = userRepository.findById(id);
-//    	List<BorrowBookSystem> borrowedBooks = user.get().getBorrowedBooksCard();
-//    	for (BorrowBookSystem borrow : borrowedBooks) {
-//    		book.assignUser(null);
-//    		book.setAvailable();
-//    		book.setWasTaken(false);
-//    	}
-        userRepository.deleteById(id);
+    	User currentUser  = getUserById(id);
+        	List<BorrowBookSystem> currentList = currentUser.getBorrowedBooksCard();
+        	for (int i = 0; i < currentList.size(); i++) {
+        		currentList.get(i).removeUser(currentUser); 		
+        	}   	
+        	userRepository.deleteById(id);
+       
     }
 
 	@Override

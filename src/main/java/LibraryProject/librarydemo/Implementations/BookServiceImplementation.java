@@ -43,51 +43,15 @@ public class BookServiceImplementation implements BookService {
 
     @Override
     public void deleteBookById(long id) {
-        bookRepository.deleteById(id);
+    	Book currentBook = getBookById(id);
+    	List<BorrowBookSystem> currentList = currentBook.getBorrowedBooksCard();
+    	for (int i = 0; i < currentList.size(); i++) {
+    		currentList.get(i).removeBook(currentBook);
+    	}   	
+    	bookRepository.deleteById(id);
+        
+  
     }
-
-//    @Override
-//    public void assignBookToUser(long bookId, long userId) {
-//        Book book = bookRepository.getById(bookId);
-//        User user = userRepository.getById(userId);
-//        if (book.isAvailable()) {
-//            if (user.getUserBooks().size() < 3 || user.getUserBooks() == null) {
-//                book.assignUser(user);
-//                user.addBooksToUser(book);
-//                book.setAvailable();
-//                setTakenAndReturnDates(book);
-//                saveBook(book);
-//            } else {
-//
-//                //TODO. google normali error praktika web aplikacijoje. Gal atskira returnentity/exception custom klasė? Ar struktūriškai turėčiau naudoti Response entity tik control?
-//                throw new IllegalArgumentException("maximum number of books taken can't exceed 3 at a time");
-//            }
-//        } else { throw new IllegalArgumentException("book already taken");
-//
-//        }
-//
-//    }
-
-//    @Override
-//    public void assignBookToUserByGuid(UUID guid, long userId) {
-//        Book book = bookRepository.getByGuid(guid);
-//        User user = userRepository.getById(userId);
-//        if (book.isAvailable()) {
-//            if (user.getUserBooks().size() < 3 || user.getUserBooks() == null) {
-//                book.assignUser(user);
-//                user.addBooksToUser(book);
-//                book.setAvailable();
-//                setTakenAndReturnDates(book);
-//                saveBook(book);
-//            } else {
-//
-//                //TODO. google normali error praktika web aplikacijoje. Gal atskira returnentity/exception custom klasė? Ar struktūriškai turėčiau naudoti Response entity tik control?
-//                throw new IllegalArgumentException("maximum number of books taken can't exceed 3 at a time");
-//            }
-//        } else { throw new IllegalArgumentException("book already taken");
-//
-//        }
-//    }
 
     @Override
     public List<Book> searchBooksByAuthor(String author) {

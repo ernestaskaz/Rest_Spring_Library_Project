@@ -70,11 +70,18 @@ public class BorrowBookSystem {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public void removeUser(User user) {
+		this.user = null;
+	}
 	public Book getBook() {
 		return book;
 	}
 	public void setBook(Book book) {
 		this.book = book;
+	}
+	
+	public void removeBook(Book book) {
+		this.book = null;
 	}
 	public long getId() {
 		return id;
