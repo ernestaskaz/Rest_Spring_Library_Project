@@ -22,7 +22,7 @@ public class User {
 //    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 //    private List<Book> userBooks = new ArrayList<>();
     @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "user")
     private List<BorrowBookSystem> borrowedBooksCard = new ArrayList<>();
     
 

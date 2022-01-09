@@ -47,18 +47,7 @@ public class BookController {
     public List<BorrowBookSystem> getBorrowedBooksHistory(@PathVariable("id") long bookId){
         return bookService.getBookBorrowingHistory(bookId);
     }
-//TODO. http status ok? pergalvoti. peržiūrėti be if, jeigu pridėjimas failina (arba tą pačią knygą pridedi, vistiek book added returnina.
-//    @PutMapping("/{bookId}/user/{userId}")
-//    public ResponseEntity<String> assignBookToUser(@PathVariable("bookId") long bookId, @PathVariable("userId") long userId) {
-//        bookService.assignBookToUser(bookId, userId);
-//        return new ResponseEntity<String>("book taken by "+ userService.getUserById(userId).getUserName() + " until  " + bookService.getBookById(bookId).getDateToReturn(),  HttpStatus.OK);
-//    }
-//
-//    @PutMapping("/assignbyguid/{guid}/{userId}")
-//    public ResponseEntity<String> assignBookToUserByGuid(@PathVariable("guid") UUID guid, @PathVariable("userId") long userId) {
-//        bookService.assignBookToUserByGuid(guid, userId);
-//        return new ResponseEntity<String>("book taken by "+ userService.getUserById(userId).getUserName() + " until  " + bookService.getBookByGuid(guid).getDateToReturn(),  HttpStatus.OK);
-//    }
+
 
     @GetMapping("/findbyguid")
     public ResponseEntity<Book> findBookByGuid(@RequestParam UUID guid) {
@@ -66,12 +55,6 @@ public class BookController {
         return new ResponseEntity<Book>(bookService.getBookByGuid(guid),  HttpStatus.OK);
     }
 
-//
-//    @PutMapping("/{bookId}/extendbook")
-//    public ResponseEntity<String> extendBook(@PathVariable("bookId") long bookId) {
-//        bookService.extendBook(bookId);
-//        return new ResponseEntity<String>("book extended", HttpStatus.OK);
-//    }
     //TODO. dubliuojasi author. Bad SEO. Jeigu būtų button'ai pasirinkti search sritį..nebūtų dubliavimo. apgalvoti: galima be buttonu padaryti? iš implementation su IF į Controller?
     @GetMapping("/search/author")
     public ResponseEntity<List<Book>> searchBooksByAuthor(@RequestParam String author) {

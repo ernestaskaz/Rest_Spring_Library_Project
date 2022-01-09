@@ -21,14 +21,11 @@ public class Book {
     private int publicationDate;
     private String isbn;
     private boolean isAvailable = true;
-    private LocalDate dateTaken = null;
-    private LocalDate dateToReturn = null;
-    private boolean wasTaken;
     // recursive problem, jeigu abu entities neturi json ignore. šis json ignore leidžia GET users matyti knygas, bet ne knygose user'ius.
     //@JsonIgnore
 //    @ManyToOne
 //    @JsonBackReference
-    @OneToMany(mappedBy = "book", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "book")
     private List<BorrowBookSystem> borrowedBooksCard = new ArrayList<>();
 
     public long getId() {
@@ -113,30 +110,6 @@ public class Book {
 
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
-    }
-
-    public LocalDate getDateTaken() {
-        return dateTaken;
-    }
-
-    public void setDateTaken(LocalDate dateTaken) {
-        this.dateTaken = dateTaken;
-    }
-
-    public LocalDate getDateToReturn() {
-        return dateToReturn;
-    }
-
-    public void setDateToReturn(LocalDate dateToReturn) {
-        this.dateToReturn = dateToReturn;
-    }
-
-    public boolean isWasTaken() {
-        return wasTaken;
-    }
-
-    public void setWasTaken(boolean wasTaken) {
-        this.wasTaken = wasTaken;
     }
    
 
