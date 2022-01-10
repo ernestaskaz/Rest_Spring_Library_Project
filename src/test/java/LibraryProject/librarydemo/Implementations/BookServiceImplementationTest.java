@@ -159,128 +159,128 @@ class BookServiceImplementationTest {
             assertThat(mockList.get(0).isAvailable()).isEqualTo(true);
         }
 
-        @Test
-        void canAssignBooksToUser() {
-
-            //given
-            Book book1 = new Book();
-            setBook(book1, 1);
-            bookServiceTest.saveBook(book1);
-            Book book2 = new Book();
-            setBook(book2, 2);
-            bookServiceTest.saveBook(book2);
-            Book book3 = new Book();
-            setBook(book3, 3);
-            bookServiceTest.saveBook(book3);
-            Book book4 = new Book();
-            setBook(book4, 4);
-            bookServiceTest.saveBook(book4);
-            User user = new User();
-            user.setId(1);
-            user.setUserName("Jim");
-            userRepository.save(user);
-
-            //when
-            bookServiceTest.assignBookToUser(book1.getId() , user.getId());
-            bookServiceTest.assignBookToUser(book2.getId() , user.getId());
-            bookServiceTest.assignBookToUser(book3.getId() , user.getId());
-            //then
-            assertThat(bookServiceTest.getBookById(1L).getUser().getUserName()).isEqualTo(user.getUserName());
-            assertThat(userRepository.findById(1L).get().getUserBooks().size()).isEqualTo(3);
-
-        }
-
-    @Test
-    void cantAssignFourBooksToUser() {
-
-        //given
-        Book book1 = new Book();
-        setBook(book1, 1);
-        bookServiceTest.saveBook(book1);
-        Book book2 = new Book();
-        setBook(book2, 2);
-        bookServiceTest.saveBook(book2);
-        Book book3 = new Book();
-        setBook(book3, 3);
-        bookServiceTest.saveBook(book3);
-        Book book4 = new Book();
-        setBook(book4, 4);
-        bookServiceTest.saveBook(book4);
-        User user = new User();
-        user.setId(1);
-        user.setUserName("Jim");
-        userRepository.save(user);
-
-        //when cant get more than 3 books
-        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
-        bookServiceTest.assignBookToUser(book2.getId() , user.getId());
-        bookServiceTest.assignBookToUser(book3.getId() , user.getId());
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> bookServiceTest.assignBookToUser(book4.getId() , user.getId()));
-        //then
-        assertEquals("maximum number of books taken can't exceed 3 at a time", exception.getMessage());
-
-
-    }
-    @Test
-    void canExtendBook() {
-            //given
-        Book book1 = new Book();
-        setBook(book1, 1);
-        bookServiceTest.saveBook(book1);
-        User user = new User();
-        user.setId(1);
-        user.setUserName("Jim");
-        userRepository.save(user);
-        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
-        LocalDate currentDateToCompare = bookServiceTest.getBookById(book1.getId()).getDateToReturn();
-            //when
-        bookServiceTest.extendBook(book1.getId());
-            //then
-        assertThat(currentDateToCompare.plusMonths(1)).isEqualTo(bookServiceTest.getBookById(book1.getId()).getDateToReturn());
-
-    }
-
-    @Test
-    void cantExtendBookTwice() {
-        //given
-        Book book1 = new Book();
-        setBook(book1, 1);
-        bookServiceTest.saveBook(book1);
-        User user = new User();
-        user.setId(1);
-        user.setUserName("Jim");
-        userRepository.save(user);
-        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
-        LocalDate currentDateToCompare = bookServiceTest.getBookById(book1.getId()).getDateToReturn();
-        //when
-        bookServiceTest.extendBook(book1.getId());
-        //then
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> bookServiceTest.extendBook(book1.getId()));
-        //then
-        assertEquals("can't extend more than once", exception.getMessage());
-
-    }
-
-    @Test
-    void canAssignBooksToUserByGuid() {
-
-        //given
-        Book book1 = new Book();
-        setBook(book1, 1);
-        bookServiceTest.saveBook(book1);
-        User user = new User();
-        user.setId(1);
-        user.setUserName("Jim");
-        userRepository.save(user);
-
-        //when 1 book
-        bookServiceTest.assignBookToUserByGuid(bookServiceTest.getBookById(book1.getId()).getGuid() , user.getId());
-        System.out.println("user books" + userRepository.findById(1L).get().getUserBooks().size());
-        System.out.println("user books" + userRepository.findById(1L).get().getUserBooks().get(0).getGuid());
-        //then
-        assertThat(userRepository.findById(1L).get().getUserBooks().get(0).getGuid()).isEqualTo(bookServiceTest.getBookById(book1.getId()).getGuid());
-
-    }
+//        @Test
+//        void canAssignBooksToUser() {
+//
+//            //given
+//            Book book1 = new Book();
+//            setBook(book1, 1);
+//            bookServiceTest.saveBook(book1);
+//            Book book2 = new Book();
+//            setBook(book2, 2);
+//            bookServiceTest.saveBook(book2);
+//            Book book3 = new Book();
+//            setBook(book3, 3);
+//            bookServiceTest.saveBook(book3);
+//            Book book4 = new Book();
+//            setBook(book4, 4);
+//            bookServiceTest.saveBook(book4);
+//            User user = new User();
+//            user.setId(1);
+//            user.setUserName("Jim");
+//            userRepository.save(user);
+//
+//            //when
+//            bookServiceTest.assignBookToUser(book1.getId() , user.getId());
+//            bookServiceTest.assignBookToUser(book2.getId() , user.getId());
+//            bookServiceTest.assignBookToUser(book3.getId() , user.getId());
+//            //then
+//            assertThat(bookServiceTest.getBookById(1L).getUser().getUserName()).isEqualTo(user.getUserName());
+//            assertThat(userRepository.findById(1L).get().getUserBooks().size()).isEqualTo(3);
+//
+//        }
+//
+//    @Test
+//    void cantAssignFourBooksToUser() {
+//
+//        //given
+//        Book book1 = new Book();
+//        setBook(book1, 1);
+//        bookServiceTest.saveBook(book1);
+//        Book book2 = new Book();
+//        setBook(book2, 2);
+//        bookServiceTest.saveBook(book2);
+//        Book book3 = new Book();
+//        setBook(book3, 3);
+//        bookServiceTest.saveBook(book3);
+//        Book book4 = new Book();
+//        setBook(book4, 4);
+//        bookServiceTest.saveBook(book4);
+//        User user = new User();
+//        user.setId(1);
+//        user.setUserName("Jim");
+//        userRepository.save(user);
+//
+//        //when cant get more than 3 books
+//        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
+//        bookServiceTest.assignBookToUser(book2.getId() , user.getId());
+//        bookServiceTest.assignBookToUser(book3.getId() , user.getId());
+//        Throwable exception = assertThrows(IllegalArgumentException.class, () -> bookServiceTest.assignBookToUser(book4.getId() , user.getId()));
+//        //then
+//        assertEquals("maximum number of books taken can't exceed 3 at a time", exception.getMessage());
+//
+//
+//    }
+//    @Test
+//    void canExtendBook() {
+//            //given
+//        Book book1 = new Book();
+//        setBook(book1, 1);
+//        bookServiceTest.saveBook(book1);
+//        User user = new User();
+//        user.setId(1);
+//        user.setUserName("Jim");
+//        userRepository.save(user);
+//        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
+//        LocalDate currentDateToCompare = bookServiceTest.getBookById(book1.getId()).getDateToReturn();
+//            //when
+//        bookServiceTest.extendBook(book1.getId());
+//            //then
+//        assertThat(currentDateToCompare.plusMonths(1)).isEqualTo(bookServiceTest.getBookById(book1.getId()).getDateToReturn());
+//
+//    }
+//
+//    @Test
+//    void cantExtendBookTwice() {
+//        //given
+//        Book book1 = new Book();
+//        setBook(book1, 1);
+//        bookServiceTest.saveBook(book1);
+//        User user = new User();
+//        user.setId(1);
+//        user.setUserName("Jim");
+//        userRepository.save(user);
+//        bookServiceTest.assignBookToUser(book1.getId() , user.getId());
+//        LocalDate currentDateToCompare = bookServiceTest.getBookById(book1.getId()).getDateToReturn();
+//        //when
+//        bookServiceTest.extendBook(book1.getId());
+//        //then
+//        Throwable exception = assertThrows(IllegalArgumentException.class, () -> bookServiceTest.extendBook(book1.getId()));
+//        //then
+//        assertEquals("can't extend more than once", exception.getMessage());
+//
+//    }
+//
+//    @Test
+//    void canAssignBooksToUserByGuid() {
+//
+//        //given
+//        Book book1 = new Book();
+//        setBook(book1, 1);
+//        bookServiceTest.saveBook(book1);
+//        User user = new User();
+//        user.setId(1);
+//        user.setUserName("Jim");
+//        userRepository.save(user);
+//
+//        //when 1 book
+//        bookServiceTest.assignBookToUserByGuid(bookServiceTest.getBookById(book1.getId()).getGuid() , user.getId());
+//        System.out.println("user books" + userRepository.findById(1L).get().getUserBooks().size());
+//        System.out.println("user books" + userRepository.findById(1L).get().getUserBooks().get(0).getGuid());
+//        //then
+//        assertThat(userRepository.findById(1L).get().getUserBooks().get(0).getGuid()).isEqualTo(bookServiceTest.getBookById(book1.getId()).getGuid());
+//
+//    }
 
 
 
