@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +25,8 @@ class BookServiceImplementationTest {
         @Autowired
         private UserRepository userRepository;
         private BookServiceImplementation bookServiceTest;
-
+	
+// create object
 
         Book setBook(Book book, int number) {
             book.setId(number);

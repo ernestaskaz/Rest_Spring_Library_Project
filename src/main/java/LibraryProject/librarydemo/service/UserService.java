@@ -4,7 +4,9 @@ import LibraryProject.librarydemo.model.BorrowBookSystem;
 import LibraryProject.librarydemo.model.User;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
 
     User saveUser(User user);

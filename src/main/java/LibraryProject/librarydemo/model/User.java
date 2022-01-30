@@ -44,7 +44,18 @@ public class User {
 	public List<BorrowBookSystem> getBorrowedBooksCard() {
 		return borrowedBooksCard;
 	}
-
+	
+	public List<BorrowBookSystem> getActiveBorrowedBooks() {
+		List<BorrowBookSystem> allUserBooks = getBorrowedBooksCard();
+		   List<BorrowBookSystem> activeUserBooks = new ArrayList<>();
+		   for (BorrowBookSystem borrow : allUserBooks) {
+			   if(!borrow.isReturned()) {
+				   activeUserBooks.add(borrow);
+			   }
+		   }
+	       return activeUserBooks;
+	}
+	
 	public void addBorrowedBooksCard(BorrowBookSystem borrow) {
 		borrowedBooksCard.add(borrow);
 	}

@@ -5,6 +5,8 @@ import LibraryProject.librarydemo.model.Book;
 import LibraryProject.librarydemo.model.BorrowBookSystem;
 import LibraryProject.librarydemo.model.User;
 import LibraryProject.librarydemo.service.BookService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class BookServiceImplementation implements BookService {
     private BookRepository bookRepository;
     private UserRepository userRepository;
 
+  
     public BookServiceImplementation(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;

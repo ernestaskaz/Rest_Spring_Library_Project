@@ -23,7 +23,7 @@ class BookControllerTest {
     private MockMvc mockMvc;
 
 
-
+// generate object
     Book setBook(Book book, int number) {
         book.setId(number);
         book.setName("name" + number);
@@ -172,29 +172,29 @@ class BookControllerTest {
     }
 
 
-    @Test
-    @Order(14)
-    void canAssignBookToUserById () throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/books/1/user/1")
-                        .accept(MediaType.ALL_VALUE))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("book taken by ")));
-
-    }
-
-
-    @Test
-    @Order(15)
-    void canAssignBookToUserByGuid () throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/books/assignbyguid/89a527f3-8812-4b90-8687-7a0f3793dd86/1")
-                        .accept(MediaType.ALL_VALUE))
-                        .andExpect(status().isOk())
-                        .andDo(print())
-                        .andExpect(content().string(org.hamcrest.Matchers.containsString("book taken by ")));
-
-    }
-
+//    @Test
+//    @Order(14)
+//    void canAssignBookToUserById () throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.put("/books/1/user/1")
+//                        .accept(MediaType.ALL_VALUE))
+//                .andExpect(status().isOk())
+//                .andDo(print())
+//                .andExpect(content().string(org.hamcrest.Matchers.containsString("book taken by ")));
+//
+//    }
+//
+//
+//    @Test
+//    @Order(15)
+//    void canAssignBookToUserByGuid () throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.put("/books/assignbyguid/89a527f3-8812-4b90-8687-7a0f3793dd86/1")
+//                        .accept(MediaType.ALL_VALUE))
+//                        .andExpect(status().isOk())
+//                        .andDo(print())
+//                        .andExpect(content().string(org.hamcrest.Matchers.containsString("book taken by ")));
+//
+//    }
+//
 
     @Test
     @Order(16)
@@ -217,16 +217,16 @@ class BookControllerTest {
 
     }
 
-    @Test
-    @Order(18)
-    void canExtendBook () throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/books/2/extendbook")
-                        .accept(MediaType.ALL_VALUE))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().string(org.hamcrest.Matchers.equalTo("book extended")));
-
-    }
+//    @Test
+//    @Order(18)
+//    void canExtendBook () throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.put("/books/2/extendbook")
+//                        .accept(MediaType.ALL_VALUE))
+//                .andExpect(status().isOk())
+//                .andDo(print())
+//                .andExpect(content().string(org.hamcrest.Matchers.equalTo("book extended")));
+//
+//    }
 
     @Test
     @Order(19)
@@ -237,7 +237,7 @@ class BookControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.[0].available").value(false));
 
-    }
+ }
 
 
 

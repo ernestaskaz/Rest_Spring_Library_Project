@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import LibraryProject.librarydemo.Repository.BookRepository;
@@ -19,26 +20,33 @@ import LibraryProject.librarydemo.service.UserService;
 @Service
 public class BorrowBookSystemServiceImplementation implements BorrowBookSystemService {
 	
+	@Autowired
     private BorrowRepository borrowRepository;
-    private UserService userService;
-    private BookService bookService;
+//	@Autowired
+//    private UserService userService;
+//	@Autowired
+//    private BookService bookService;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private BookRepository bookRepository;
 	
     
-	  public BorrowBookSystemServiceImplementation(BorrowRepository borrowRepository, BookService bookService, UserService userService) {
+	  public BorrowBookSystemServiceImplementation(BorrowRepository borrowRepository, BookRepository bookRepository, UserRepository userRepository) {
 	  this.borrowRepository = borrowRepository;
-	  this.bookService = bookService;
-	  this.userService = userService;
+	 this.bookRepository = bookRepository;
+	  this.userRepository = userRepository;
 	}
 
 
 	@Override
 	public void saveBorrow(long userId, long bookId) {
         
-      Book book = bookService.getBookById(bookId);
-      User user = userService.getUserById(userId);
+      Book book = bookRepository.findById(bookId).get();
+      User user = userRepository.findById(userId).get();
   
         if (book.isAvailable()) {
-            if (userService.getUserActiveBooks(userId).size() < 3) {
+            if (user.getActiveBorrowedBooks().size() < 3) {
                 
             	BorrowBookSystem borrow =  new BorrowBookSystem(LocalDate.now(),LocalDate.now().plusMonths(1), user, book);
             	book.addBorrowedBooksCard(borrow);

@@ -1,8 +1,11 @@
 package LibraryProject.librarydemo.service;
 
 import java.util.List;
-import LibraryProject.librarydemo.model.BorrowBookSystem;
 
+import org.springframework.stereotype.Service;
+
+import LibraryProject.librarydemo.model.BorrowBookSystem;
+@Service
 public interface BorrowBookSystemService {
 	
 	
