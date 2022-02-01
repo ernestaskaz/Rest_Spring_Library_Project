@@ -22,10 +22,6 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
 	
 	@Autowired
     private BorrowRepository borrowRepository;
-//	@Autowired
-//    private UserService userService;
-//	@Autowired
-//    private BookService bookService;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -61,7 +57,10 @@ public class BorrowBookSystemServiceImplementation implements BorrowBookSystemSe
 
 
     }
+       
 	}
+	  
+
 
 
 	@Override
@@ -109,13 +108,6 @@ public void returnBorrowedBook(long borrowId) {
 	
 	
 }
-
-
-
-
-
-	
-	
 
 
 
