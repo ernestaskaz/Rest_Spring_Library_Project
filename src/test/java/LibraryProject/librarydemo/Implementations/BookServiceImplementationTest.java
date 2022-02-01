@@ -241,7 +241,7 @@ class BookServiceImplementationTest {
 //        assertThat(currentDateToCompare.plusMonths(1)).isEqualTo(bookServiceTest.getBookById(book1.getId()).getDateToReturn());
 //
 //    }
-//
+////
 //    @Test
 //    void cantExtendBookTwice() {
 //        //given
@@ -262,7 +262,7 @@ class BookServiceImplementationTest {
 //        assertEquals("can't extend more than once", exception.getMessage());
 //
 //    }
-//
+
 //    @Test
 //    void canAssignBooksToUserByGuid() {
 //
