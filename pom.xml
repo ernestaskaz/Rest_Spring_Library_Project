@@ -34,11 +34,18 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>2.5.4</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.h2database</groupId>-->
+<!--			<artifactId>h2</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.3.6</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
