@@ -1,6 +1,9 @@
 package LibraryProject.librarydemo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class Book {
     private String isbn;
     private boolean isAvailable = true;
     // recursive problem, jeigu abu entities neturi json ignore. šis json ignore leidžia GET users matyti knygas, bet ne knygose user'ius.
-    //@JsonIgnore
+    @JsonIgnoreProperties({"user"})
 //    @ManyToOne
 //    @JsonBackReference
     @OneToMany(mappedBy = "book")
