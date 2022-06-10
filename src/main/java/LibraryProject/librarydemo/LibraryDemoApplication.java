@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-		//(exclude = {DataSourceAutoConfiguration.class})
+		//(exclude = {DataSourceAutoConfiguration.class})//
 public class LibraryDemoApplication {
 
 	public static void main(String[] args) {
