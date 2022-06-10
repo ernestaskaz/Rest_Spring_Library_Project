@@ -1,32 +1,22 @@
 version: "3.8"
 services:
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - 27017:27017
-    volumes:
-      - data:/data
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-volumes:
-  data: {}
-
-networks:
-  default:
-    name: mongodb_network
-
+  app:
+    container_name: springboot-postgresql
+    image: springboot-postgresql
+    build: ./
+#    ports:
+#      - "8080:8080"
+    depends_on:
+      - postgresqldb
+  postgresqldb:
+      image: postgres
+      container_name: postgres-test
+      ports:
+        - "5433:5432"
+      environment:
+        - POSTGRES_PASSWORD=mysecretpassword
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=postgres
 
 
 

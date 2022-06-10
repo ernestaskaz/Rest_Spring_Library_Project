@@ -230,6 +230,7 @@ class BookControllerTest {
 
     @Test
     @Order(19)
+    @Disabled
     void canSearchByUnavailable () throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/books/search/unavailable?unavailable=true")
                         .accept(MediaType.ALL_VALUE))
