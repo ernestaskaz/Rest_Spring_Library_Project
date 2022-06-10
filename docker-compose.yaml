@@ -6,19 +6,23 @@ services:
     build: ./
     ports:
       - "8080:8080"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
     depends_on:
-      - postgresqldb
-  postgresqldb:
+      - postgresqldbultimate
+  postgresqldbultimate:
       image: postgres
 #      container_name: postgres-test
       ports:
-        - "5432:5432"
+        - "5433:5432"
       environment:
         - POSTGRES_PASSWORD=postgres
         - POSTGRES_USER=postgres
         - POSTGRES_DB=postgres
 
-
+#BŪTINAI REMOVINTI SENĄ IMAGE su docker rmi image_name po docker compose down. turbūt ir jar failą /target. mvn clean su double cntrl.
 
 
 #version: "3.8"
